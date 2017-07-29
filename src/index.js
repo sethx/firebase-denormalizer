@@ -88,9 +88,12 @@ export default function firebaseDenormalizer(firebase) {
           return Promise.all([
             firebase.ref(getPathString(joinCollectionName, pathObject[filterableKey], pathRef.key))
               .remove(),
-            firebase.ref(getPathString(joinCollectionName, getKey(filterableValue), pathRef.key))
+            firebase.ref(getPathString(joinCollectionName, filterableValue, pathRef.key))
               .set(true)
           ]);
+        } else {
+          return firebase.ref(getPathString(joinCollectionName, filterableValue, pathRef.key))
+            .set(true);
         }
       });
       return payload;
